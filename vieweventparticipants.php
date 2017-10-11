@@ -112,7 +112,7 @@ function vieweventparticipants_civicrm_caseTypes(&$caseTypes) {
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_caseTypes
  */
 function vieweventparticipants_civicrm_angularModules(&$angularModules) {
-_vieweventparticipants_civix_civicrm_angularModules($angularModules);
+  _vieweventparticipants_civix_civicrm_angularModules($angularModules);
 }
 
 /**
@@ -125,31 +125,30 @@ function vieweventparticipants_civicrm_alterSettingsFolders(&$metaDataFolders = 
 }
 
 /**
- * Functions below this ship commented out. Uncomment as required.
+ * Implements hook_civicrm_aclWhereClause().
  *
+ * @link https://docs.civicrm.org/dev/en/master/hooks/hook_civicrm_aclWhereClause
+ */
+function vieweventparticipants_civicrm_aclWhereClause($type, &$tables, &$whereTables, &$contactID, &$where) {
+  CRM_Core_Error::debug_log_message(__FUNCTION__ . ": start: \$contactID '$contactID', \$where '$where'.");
+  CRM_Core_Error::debug_log_message(__FUNCTION__ . ": start: \$tables " . print_r($tables, TRUE));
+  CRM_Core_Error::debug_log_message(__FUNCTION__ . ": start: \$whereTables " . print_r($whereTables, TRUE));
+  if (!$contactID) {
+    return;
+  }
 
-/**
- * Implements hook_civicrm_preProcess().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_preProcess
- *
-function vieweventparticipants_civicrm_preProcess($formName, &$form) {
+  // TODO Only allow access if user also has our permission.
+  // TODO Optimisation: only add clause if user has created an event.
 
-} // */
+  $tables['user_event_participants'] = $whereTables['user_event_participants']
+    = "LEFT JOIN civicrm_participant user_event_participants ON contact_a.id = user_event_participants.contact_id";
 
-/**
- * Implements hook_civicrm_navigationMenu().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_navigationMenu
- *
-function vieweventparticipants_civicrm_navigationMenu(&$menu) {
-  _vieweventparticipants_civix_insert_navigation_menu($menu, NULL, array(
-    'label' => ts('The Page', array('domain' => 'org.civicrm.vieweventparticipants')),
-    'name' => 'the_page',
-    'url' => 'civicrm/the-page',
-    'permission' => 'access CiviReport,access CiviContribute',
-    'operator' => 'OR',
-    'separator' => 0,
-  ));
-  _vieweventparticipants_civix_navigationMenu($menu);
-} // */
+  $tables['user_events'] = $whereTables['user_events']
+    = "LEFT JOIN civicrm_event user_events ON user_event_participants.event_id = user_events.id";
+
+  $where .= sprintf("user_events.created_id = %d", $contactID);
+
+  CRM_Core_Error::debug_log_message(__FUNCTION__ . ": end: \$where '$where'.");
+  CRM_Core_Error::debug_log_message(__FUNCTION__ . ": end: \$tables " . print_r($tables, TRUE));
+  CRM_Core_Error::debug_log_message(__FUNCTION__ . ": end: \$whereTables " . print_r($whereTables, TRUE));
+}
