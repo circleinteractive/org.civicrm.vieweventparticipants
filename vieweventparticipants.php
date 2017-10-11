@@ -130,6 +130,9 @@ function vieweventparticipants_civicrm_alterSettingsFolders(&$metaDataFolders = 
  * @link https://docs.civicrm.org/dev/en/master/hooks/hook_civicrm_aclWhereClause
  */
 function vieweventparticipants_civicrm_aclWhereClause($type, &$tables, &$whereTables, &$contactID, &$where) {
+  /*
+   * Grant access for event creators to view their events' participants.
+   */
   CRM_Core_Error::debug_log_message(__FUNCTION__ . ": start: \$contactID '$contactID', \$where '$where'.");
   CRM_Core_Error::debug_log_message(__FUNCTION__ . ": start: \$tables " . print_r($tables, TRUE));
   CRM_Core_Error::debug_log_message(__FUNCTION__ . ": start: \$whereTables " . print_r($whereTables, TRUE));
@@ -150,7 +153,16 @@ function vieweventparticipants_civicrm_aclWhereClause($type, &$tables, &$whereTa
       = "LEFT JOIN civicrm_event ON civicrm_participant.event_id = civicrm_event.id";
   }
 
-  $where .= sprintf("civicrm_event.created_id = %d", $contactID);
+  /*
+   * If other ACLs are in place, e.g. through ACL UI, then we allow access to
+   * the user's events' participants in addition to the contacts permitted by
+   * these other ACLs. Hence OR.
+   */
+  if (!empty($where)) {
+    $where = "($where) OR ";
+  }
+
+  $where .= sprintf("(civicrm_event.created_id = %d)", $contactID);
   CRM_Core_Error::debug_log_message(__FUNCTION__ . ": end: \$where '$where'.");
   CRM_Core_Error::debug_log_message(__FUNCTION__ . ": end: \$tables " . print_r($tables, TRUE));
   CRM_Core_Error::debug_log_message(__FUNCTION__ . ": end: \$whereTables " . print_r($whereTables, TRUE));
