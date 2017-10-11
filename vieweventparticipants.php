@@ -125,9 +125,21 @@ function vieweventparticipants_civicrm_alterSettingsFolders(&$metaDataFolders = 
 }
 
 /**
+ * Implements hook_civicrm_permission().
+ *
+ * @link https://docs.civicrm.org/dev/en/master/hooks/hook_civicrm_permission/
+ */
+function vieweventparticipants_civicrm_permission(&$permissions) {
+  $permissions['view my event participants'] = array(
+    ts('CiviEvent: view my event participants', array('domain' => 'org.civicrm.vieweventparticipants')),
+    ts('Grants event creators permission to view their event\'s participants', array('domain' => 'org.civicrm.vieweventparticipants')),
+  );
+}
+
+/**
  * Implements hook_civicrm_aclWhereClause().
  *
- * @link https://docs.civicrm.org/dev/en/master/hooks/hook_civicrm_aclWhereClause
+ * @link https://docs.civicrm.org/dev/en/master/hooks/hook_civicrm_aclWhereClause/
  */
 function vieweventparticipants_civicrm_aclWhereClause($type, &$tables, &$whereTables, &$contactID, &$where) {
   /*
@@ -140,8 +152,10 @@ function vieweventparticipants_civicrm_aclWhereClause($type, &$tables, &$whereTa
     return;
   }
 
-  // TODO Only allow access if user also has our permission.
-  // TODO Optimisation: only add clause if user has created an event.
+  // Only allow access if user also has our permission.
+  if (!CRM_Core_Permission::check('view my event participants')) {
+    return;
+  }
 
   if (!in_array('civicrm_participant', $whereTables)) {
     $tables['civicrm_participant'] = $whereTables['civicrm_participant']
