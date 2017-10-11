@@ -140,14 +140,17 @@ function vieweventparticipants_civicrm_aclWhereClause($type, &$tables, &$whereTa
   // TODO Only allow access if user also has our permission.
   // TODO Optimisation: only add clause if user has created an event.
 
-  $tables['user_event_participants'] = $whereTables['user_event_participants']
-    = "LEFT JOIN civicrm_participant user_event_participants ON contact_a.id = user_event_participants.contact_id";
+  if (!in_array('civicrm_participant', $whereTables)) {
+    $tables['civicrm_participant'] = $whereTables['civicrm_participant']
+      = "LEFT JOIN civicrm_participant ON contact_a.id = civicrm_participant.contact_id";
+  }
 
-  $tables['user_events'] = $whereTables['user_events']
-    = "LEFT JOIN civicrm_event user_events ON user_event_participants.event_id = user_events.id";
+  if (!in_array('civicrm_event', $whereTables)) {
+    $tables['civicrm_event'] = $whereTables['civicrm_event']
+      = "LEFT JOIN civicrm_event ON civicrm_participant.event_id = civicrm_event.id";
+  }
 
-  $where .= sprintf("user_events.created_id = %d", $contactID);
-
+  $where .= sprintf("civicrm_event.created_id = %d", $contactID);
   CRM_Core_Error::debug_log_message(__FUNCTION__ . ": end: \$where '$where'.");
   CRM_Core_Error::debug_log_message(__FUNCTION__ . ": end: \$tables " . print_r($tables, TRUE));
   CRM_Core_Error::debug_log_message(__FUNCTION__ . ": end: \$whereTables " . print_r($whereTables, TRUE));
