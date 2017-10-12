@@ -9,13 +9,12 @@
     <email>davej@circle-interactive.co.uk</email>
   </maintainer>
   <urls>
-    <url desc="Main Extension Page">http://FIXME</url>
-    <url desc="Documentation">http://FIXME</url>
-    <url desc="Support">http://FIXME</url>
+    <url desc="Main Extension Page">https://github.com/circleinteractive/org.civicrm.vieweventparticipants</url>
+    <url desc="Documentation">https://github.com/circleinteractive/org.civicrm.vieweventparticipants</url>
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
   <releaseDate>2017-10-11</releaseDate>
-  <version>0.1</version>
+  <version>1.0.alpha1</version>
   <develStage>alpha</develStage>
   <compatibility>
     <ver>4.7</ver>
