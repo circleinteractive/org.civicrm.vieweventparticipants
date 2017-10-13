@@ -123,6 +123,11 @@ function vieweventparticipants_civicrm_permission(&$permissions) {
     ts('CiviEvent: view my event participants', array('domain' => 'org.civicrm.vieweventparticipants')),
     ts('Grants event creators permission to view their event\'s participants', array('domain' => 'org.civicrm.vieweventparticipants')),
   );
+
+  $permissions['edit my event participants'] = array(
+    ts('CiviEvent: edit my event participants', array('domain' => 'org.civicrm.vieweventparticipants')),
+    ts('Grants event creators permission to edit their event\'s participants', array('domain' => 'org.civicrm.vieweventparticipants')),
+  );
 }
 
 /**
@@ -132,14 +137,24 @@ function vieweventparticipants_civicrm_permission(&$permissions) {
  */
 function vieweventparticipants_civicrm_aclWhereClause($type, &$tables, &$whereTables, &$contactID, &$where) {
   /*
-   * Grant access for event creators to view their events' participants.
+   * Grant access for event creators to view or edit their events' participants.
    */
   if (!$contactID) {
     return;
   }
 
-  // Only allow access if user also has our permission.
-  if (!CRM_Core_Permission::check('view my event participants')) {
+  if ($type != CRM_Core_Permission::VIEW && $type != CRM_Core_Permission::EDIT) {
+    return;
+  }
+
+  /*
+   * Only allow access if user also has our permission.
+   */
+  if ($type == CRM_Core_Permission::VIEW && !CRM_Core_Permission::check('view my event participants')) {
+    return;
+  }
+
+  if ($type == CRM_Core_Permission::EDIT && !CRM_Core_Permission::check('edit my event participants')) {
     return;
   }
 
