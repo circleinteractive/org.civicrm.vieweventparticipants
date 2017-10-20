@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <extension key="org.civicrm.vieweventparticipants" type="module">
   <file>vieweventparticipants</file>
-  <name>View Event Participants</name>
+  <name>View My Event Participants</name>
   <description>Grants access for event creators to view or edit their events' participants.</description>
   <license>AGPL-3.0</license>
   <maintainer>
@@ -10,16 +10,16 @@
   </maintainer>
   <urls>
     <url desc="Main Extension Page">https://github.com/circleinteractive/org.civicrm.vieweventparticipants</url>
-    <url desc="Documentation">https://github.com/circleinteractive/org.civicrm.vieweventparticipants</url>
+    <url desc="Documentation">https://github.com/circleinteractive/org.civicrm.vieweventparticipants/blob/master/README.md</url>
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
-  <releaseDate>2017-10-13</releaseDate>
-  <version>1.0.alpha2</version>
-  <develStage>alpha</develStage>
+  <releaseDate>2017-10-20</releaseDate>
+  <version>1.0.beta1</version>
+  <develStage>beta</develStage>
   <compatibility>
     <ver>4.7</ver>
   </compatibility>
-  <comments>This is a new, undeveloped module</comments>
+  <comments>This is a new extension but has undergone extensive testing, including a suite of unit tests.</comments>
   <civix>
     <namespace>CRM/Vieweventparticipants</namespace>
   </civix>
