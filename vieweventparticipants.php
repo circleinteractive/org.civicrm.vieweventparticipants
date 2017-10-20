@@ -44,6 +44,21 @@ function vieweventparticipants_civicrm_uninstall() {
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_enable
  */
 function vieweventparticipants_civicrm_enable() {
+  CRM_Core_Session::setStatus(
+    ts(
+      "To use the extension: in your CMS's permissions management screen, grant the 'view my event participants' or 'edit my event participants' permissions to the users/roles who need to be able to view/edit their event participants.
+      See the <a href=\"%1\">documentation</a> for details.",
+      array(
+        'domain' => 'org.civicrm.vieweventparticipants',
+        1 => 'https://github.com/circleinteractive/org.civicrm.vieweventparticipants/blob/master/README.md',
+      )
+    ),
+    ts(
+      '"View My Event Participants" extension enabled',
+      array('domain' => 'org.civicrm.vieweventparticipants')
+    ),
+    'success'
+  );
   _vieweventparticipants_civix_civicrm_enable();
 }
 

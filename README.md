@@ -1,8 +1,8 @@
-# org.civicrm.vieweventparticipants
+# View My Event Participants
 
 ## Overview
 
-CiviCRM extension granting access for event creators to view or edit their events' participants.
+View My Event Participants (org.civicrm.vieweventparticipants) is a CiviCRM extension granting access for event creators to view or edit their events' participants.
 
 ## Why would you need this extension?
 
