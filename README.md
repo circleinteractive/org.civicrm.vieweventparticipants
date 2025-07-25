@@ -26,3 +26,8 @@ Currently this extension is not available for automated distribution through Civ
 From the CiviCRM menu, go to Administer -> System settings -> Extensions. Click the **Enable** link for View Event Participants (org.civicrm.vieweventparticipants).
 3. Grant permissions.
 In your CMS's permissions management screen, grant the 'view my event participants' or 'edit my event participants' permissions to the users/roles who need to be able to view/edit their event participants.
+
+## Other extensions
+To reassign an event to a different creator, install the [Edit Event Manager](https://lab.civicrm.org/extensions/editeventmanager) extension.
+
+If you need to grant permission to view contacts based on a participant's event role (e.g. all instructors can see attendee contacts), use the [Event Permissions by Role](https://lab.civicrm.org/extensions/eventpermissionsbyrole) extension.
