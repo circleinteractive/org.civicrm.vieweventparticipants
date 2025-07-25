@@ -13,14 +13,18 @@
     <url desc="Documentation">https://github.com/circleinteractive/org.civicrm.vieweventparticipants/blob/master/README.md</url>
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
-  <releaseDate>2017-10-20</releaseDate>
-  <version>1.0.beta1</version>
-  <develStage>beta</develStage>
+  <releaseDate>2024-03-29</releaseDate>
+  <version>1.0</version>
+  <develStage>stable</develStage>
   <compatibility>
-    <ver>4.7</ver>
+    <ver>5.70</ver>
   </compatibility>
   <comments>This is a new extension but has undergone extensive testing, including a suite of unit tests.</comments>
   <civix>
     <namespace>CRM/Vieweventparticipants</namespace>
+    <format>23.02.1</format>
   </civix>
+  <classloader>
+    <psr4 prefix="Civi\" path="Civi"/>
+  </classloader>
 </extension>
