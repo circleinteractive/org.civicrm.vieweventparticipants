@@ -31,14 +31,14 @@ function vieweventparticipants_civicrm_enable() {
     ts(
       "To use the extension: in your CMS's permissions management screen, grant the 'view my event participants' or 'edit my event participants' permissions to the users/roles who need to be able to view/edit their event participants.
       See the <a href=\"%1\">documentation</a> for details.",
-      array(
+      [
         'domain' => 'org.civicrm.vieweventparticipants',
         1 => 'https://github.com/circleinteractive/org.civicrm.vieweventparticipants/blob/master/README.md',
-      )
+      ]
     ),
     ts(
       '"View My Event Participants" extension enabled',
-      array('domain' => 'org.civicrm.vieweventparticipants')
+      ['domain' => 'org.civicrm.vieweventparticipants']
     ),
     'success'
   );
