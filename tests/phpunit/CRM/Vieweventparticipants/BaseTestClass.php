@@ -61,17 +61,17 @@ class CRM_Vieweventparticipants_BaseTestClass extends \CivixPhar\PHPUnit\Framewo
    *   Contact ID of the created user.
    */
   public function createLoggedInUser() {
-    $params = array(
+    $params = [
       'first_name' => 'Logged In',
       'last_name' => 'User ' . rand(),
       'contact_type' => 'Individual',
-    );
+    ];
     $contactID = $this->individualCreate($params);
-    $this->callAPISuccess('UFMatch', 'create', array(
+    $this->callAPISuccess('UFMatch', 'create', [
       'contact_id' => $contactID,
       'uf_name' => 'superman',
       'uf_id' => 6,
-    ));
+    ]);
 
     $session = CRM_Core_Session::singleton();
     $session->set('userID', $contactID);
@@ -129,10 +129,10 @@ class CRM_Vieweventparticipants_BaseTestClass extends \CivixPhar\PHPUnit\Framewo
    * @return array|int
    */
   public function callAPISuccess($entity, $action, $params, $checkAgainst = NULL) {
-    $params = array_merge(array(
+    $params = array_merge([
         'version' => $this->_apiversion,
         'debug' => 1,
-      ),
+      ],
       $params
     );
     switch (strtolower($action)) {
@@ -169,10 +169,10 @@ class CRM_Vieweventparticipants_BaseTestClass extends \CivixPhar\PHPUnit\Framewo
    * @return array|int
    */
   public function callAPISuccessGetValue($entity, $params, $type = NULL) {
-    $params += array(
+    $params += [
       'version' => $this->_apiversion,
       'debug' => 1,
-    );
+    ];
     $result = $this->civicrm_api($entity, 'getvalue', $params);
     if ($type) {
       if ($type == 'integer') {
@@ -197,7 +197,7 @@ class CRM_Vieweventparticipants_BaseTestClass extends \CivixPhar\PHPUnit\Framewo
    * @return int
    *   id of Individual created
    */
-  public function individualCreate($params = array(), $seq = 0) {
+  public function individualCreate($params = [], $seq = 0) {
     $params = array_merge($this->sampleContact('Individual', $seq), $params);
     return $this->_contactCreate($params);
   }
@@ -214,27 +214,27 @@ class CRM_Vieweventparticipants_BaseTestClass extends \CivixPhar\PHPUnit\Framewo
    *   properties of sample contact (ie. $params for API call)
    */
   public function sampleContact($contact_type, $seq = 0) {
-    $samples = array(
-      'Individual' => array(
+    $samples = [
+      'Individual' => [
         // The number of values in each list need to be coprime numbers to not have duplicates
-        'first_name' => array('Anthony', 'Joe', 'Terrence', 'Lucie', 'Albert', 'Bill', 'Kim'),
-        'middle_name' => array('J.', 'M.', 'P', 'L.', 'K.', 'A.', 'B.', 'C.', 'D', 'E.', 'Z.'),
-        'last_name' => array('Anderson', 'Miller', 'Smith', 'Collins', 'Peterson'),
-      ),
-      'Organization' => array(
-        'organization_name' => array(
+        'first_name' => ['Anthony', 'Joe', 'Terrence', 'Lucie', 'Albert', 'Bill', 'Kim'],
+        'middle_name' => ['J.', 'M.', 'P', 'L.', 'K.', 'A.', 'B.', 'C.', 'D', 'E.', 'Z.'],
+        'last_name' => ['Anderson', 'Miller', 'Smith', 'Collins', 'Peterson'],
+      ],
+      'Organization' => [
+        'organization_name' => [
           'Unit Test Organization',
           'Acme',
           'Roberts and Sons',
           'Cryo Space Labs',
           'Sharper Pens',
-        ),
-      ),
-      'Household' => array(
-        'household_name' => array('Unit Test household'),
-      ),
-    );
-    $params = array('contact_type' => $contact_type);
+        ],
+      ],
+      'Household' => [
+        'household_name' => ['Unit Test household'],
+      ],
+    ];
+    $params = ['contact_type' => $contact_type];
     foreach ($samples[$contact_type] as $key => $values) {
       $params[$key] = $values[$seq % count($values)];
     }
@@ -284,14 +284,14 @@ class CRM_Vieweventparticipants_BaseTestClass extends \CivixPhar\PHPUnit\Framewo
       $event = $this->eventCreate();
       $params['event_id'] = $event['id'];
     }
-    $defaults = array(
+    $defaults = [
       'status_id' => 2,
       'role_id' => 1,
       'register_date' => 20070219,
       'source' => 'Wimbeldon',
       'event_level' => 'Payment',
       'debug' => 1,
-    );
+    ];
 
     $params = array_merge($defaults, $params);
     $result = $this->callAPISuccess('Participant', 'create', $params);
@@ -306,18 +306,18 @@ class CRM_Vieweventparticipants_BaseTestClass extends \CivixPhar\PHPUnit\Framewo
    *
    * @return array
    */
-  public function eventCreate($params = array()) {
+  public function eventCreate($params = []) {
     // if no contact was passed, make up a dummy event creator
     if (!isset($params['contact_id'])) {
-      $params['contact_id'] = $this->_contactCreate(array(
+      $params['contact_id'] = $this->_contactCreate([
         'contact_type' => 'Individual',
         'first_name' => 'Event',
         'last_name' => 'Creator',
-      ));
+      ]);
     }
 
     // set defaults for missing params
-    $params = array_merge(array(
+    $params = array_merge([
       'title' => 'Annual CiviCRM meet',
       'summary' => 'If you have any CiviCRM related issues or want to track where CiviCRM is heading, Sign up now',
       'description' => 'This event is intended to give brief idea about progess of CiviCRM and giving solutions to common user issues',
@@ -333,7 +333,7 @@ class CRM_Vieweventparticipants_BaseTestClass extends \CivixPhar\PHPUnit\Framewo
       'is_monetary' => 0,
       'is_active' => 1,
       'is_show_location' => 0,
-    ), $params);
+    ], $params);
 
     return $this->callAPISuccess('Event', 'create', $params);
   }
